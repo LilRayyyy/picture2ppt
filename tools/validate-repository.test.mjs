@@ -27,6 +27,7 @@ async function createValidFixture(t) {
     ".github/ISSUE_TEMPLATE/bug_report.yml",
     ".github/ISSUE_TEMPLATE/feature_request.yml",
     ".github/ISSUE_TEMPLATE/config.yml",
+    ".github/workflows/validate.yml",
     "docs/PUBLIC_RELEASE_CHECKLIST.md",
     "skills/ppt-fidelity-editor/agents/openai.yaml",
     "skills/ppt-fidelity-editor/assets/fidelity-ledger.example.json",
@@ -132,5 +133,14 @@ test("rejects unfinished public copy markers", async (t) => {
   assert.match(
     (await validateRepository(root)).join("\n"),
     /unfinished public copy/,
+  );
+});
+
+test("requires the validation workflow", async (t) => {
+  const { root } = await createValidFixture(t);
+  await fs.rm(path.join(root, ".github", "workflows", "validate.yml"));
+  assert.match(
+    (await validateRepository(root)).join("\n"),
+    /missing required file: \.github\/workflows\/validate\.yml/,
   );
 });

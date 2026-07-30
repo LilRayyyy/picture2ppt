@@ -16,6 +16,7 @@ const REQUIRED_FILES = [
   ".github/ISSUE_TEMPLATE/bug_report.yml",
   ".github/ISSUE_TEMPLATE/feature_request.yml",
   ".github/ISSUE_TEMPLATE/config.yml",
+  ".github/workflows/validate.yml",
   "docs/PUBLIC_RELEASE_CHECKLIST.md",
   "skills/ppt-fidelity-editor/SKILL.md",
   "skills/ppt-fidelity-editor/agents/openai.yaml",

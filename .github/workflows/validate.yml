@@ -1,0 +1,32 @@
+name: Validate
+
+on:
+  push:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test repository validator
+        run: node --test tools/validate-repository.test.mjs
+      - name: Validate repository
+        run: node tools/validate-repository.mjs
+      - name: Check Skill scripts
+        run: |
+          node --check skills/ppt-fidelity-editor/scripts/validate-fidelity-ledger.mjs
+          node --check skills/ppt-fidelity-editor/scripts/validate-visual-qa.mjs
+          node --check skills/ppt-fidelity-editor/scripts/verify-ppt-structure.mjs
+      - name: Validate example fidelity ledger
+        run: node skills/ppt-fidelity-editor/scripts/validate-fidelity-ledger.mjs skills/ppt-fidelity-editor/assets/fidelity-ledger.example.json
