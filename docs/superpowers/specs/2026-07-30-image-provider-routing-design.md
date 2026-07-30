@@ -96,4 +96,3 @@ After implementation:
 3. confirm the diff changes only the two in-scope files;
 4. review the routing logic against five scenarios: Codex with `imagegen`, Gemini with an available image integration, Claude with an MCP image tool, Kimi without an image tool, and a generic host whose tool lacks reference-image support;
 5. confirm that the existing generation contract and no-provider hard gate remain intact.
-

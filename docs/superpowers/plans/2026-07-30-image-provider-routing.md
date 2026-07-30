@@ -261,4 +261,3 @@ git log --oneline --decorate origin/main..HEAD
 ```
 
 Expected: separate commits exist for the approved design, implementation plan, routing reference, and core Skill integration.
-
