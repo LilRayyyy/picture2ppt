@@ -178,7 +178,7 @@ Replacing a multi-bend or curved reference path with a generic straight or dashe
 
 ### 7. Generate Difficult Visuals
 
-Use a provider-neutral image task. Route OpenAI/Codex to `imagegen`, Gemini to an available Nano Banana capability, or use an equivalent provider.
+Read [references/image-provider-routing.md](references/image-provider-routing.md) before image work. Discover the host's actual callable image capability instead of inferring one from the model or provider name. On Codex, use the available `imagegen` skill and its image-generation tool. On Gemini, Claude, Kimi, and other hosts, use only a capability the host actually exposes. Once a suitable capability is found, read its instructions and invoke it directly.
 
 Generate one visual singleton per asset. Require:
 
@@ -188,9 +188,9 @@ Generate one visual singleton per asset. Require:
 - high resolution at presentation size;
 - no cursor, watermark, border, or neighboring slide content.
 
-Inspect every generated asset before use.
+Confirm that every invocation produced a real, accessible output asset. Inspect every generated or edited asset before use.
 
-If no image capability is available, redraw only genuinely simple icons natively. If a complex icon cannot be reconstructed faithfully, report the blocker. Do not silently fall back to Emoji, symbol fonts, clipart, primitive approximations, a source screenshot, or a composite crop.
+If a suitable capability exists but requires a connection, permission, paid action, or source attachment, request that specific prerequisite and then resume. If no suitable capability is available, redraw only genuinely simple icons natively. If a complex icon cannot be reconstructed faithfully, report the blocker. Do not silently fall back to Emoji, symbol fonts, clipart, primitive approximations, a source screenshot, or a composite crop.
 
 ### 8. Verify Editability and Appearance
 
