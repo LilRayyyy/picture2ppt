@@ -1,0 +1,131 @@
+{
+  "slideSize": {
+    "width": 1600,
+    "height": 900
+  },
+  "elements": [
+    {
+      "id": "s1-ambient-background",
+      "visualKey": "slide-1-ambient-background",
+      "slide": 1,
+      "type": "background",
+      "representation": "background",
+      "backgroundAction": "retain",
+      "bbox": [
+        0,
+        0,
+        1600,
+        900
+      ],
+      "semantic": false,
+      "atomic": true,
+      "editable": false,
+      "containsText": false,
+      "assetOrigin": "ambient",
+      "semanticRoles": [],
+      "qa": [
+        "contains no text, icons, charts, connectors, or grouped illustrations"
+      ],
+      "visualComplexity": "not-applicable",
+      "constructionMethod": "ambient"
+    },
+    {
+      "id": "s1-title",
+      "visualKey": "slide-1-title",
+      "slide": 1,
+      "type": "text",
+      "representation": "native",
+      "backgroundAction": "none",
+      "bbox": [
+        420,
+        30,
+        760,
+        65
+      ],
+      "semantic": true,
+      "atomic": true,
+      "editable": true,
+      "containsText": true,
+      "assetOrigin": "native-rebuild",
+      "semanticRoles": [
+        "slide-title"
+      ],
+      "qa": [
+        "exact text",
+        "single line",
+        "font and alignment"
+      ],
+      "visualComplexity": "not-applicable",
+      "constructionMethod": "native-text"
+    },
+    {
+      "id": "s1-security-shield-icon",
+      "visualKey": "slide-1-security-shield-icon",
+      "slide": 1,
+      "type": "icon",
+      "representation": "sticker",
+      "backgroundAction": "none",
+      "bbox": [
+        755,
+        250,
+        90,
+        100
+      ],
+      "semantic": true,
+      "atomic": true,
+      "editable": true,
+      "containsText": false,
+      "assetOrigin": "generated",
+      "semanticRoles": [
+        "security-shield-icon"
+      ],
+      "visibleSubcomponents": [
+        "security-shield-icon"
+      ],
+      "qa": [
+        "newly generated singleton",
+        "preserve shield perspective",
+        "preserve shield material and shadow"
+      ],
+      "visualComplexity": "complex",
+      "constructionMethod": "generated-image",
+      "referenceIsEmoji": false,
+      "usesEmoji": false,
+      "usesSymbolFont": false,
+      "usesClipart": false
+    },
+    {
+      "id": "s1-transfer-arrow",
+      "visualKey": "slide-1-transfer-arrow",
+      "slide": 1,
+      "type": "connector",
+      "representation": "native",
+      "backgroundAction": "none",
+      "points": [
+        [
+          800,
+          220
+        ],
+        [
+          800,
+          274
+        ]
+      ],
+      "semantic": true,
+      "atomic": true,
+      "editable": true,
+      "containsText": false,
+      "assetOrigin": "native-rebuild",
+      "semanticRoles": [
+        "management-to-platform-flow"
+      ],
+      "qa": [
+        "verify rendered direction",
+        "verify angle",
+        "no duplicate"
+      ],
+      "visualComplexity": "not-applicable",
+      "constructionMethod": "native-connector"
+    }
+  ]
+}

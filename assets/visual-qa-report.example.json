@@ -1,0 +1,74 @@
+{
+  "deckSize": {
+    "width": 1600,
+    "height": 900
+  },
+  "structureQaPassed": true,
+  "visualQaPassed": true,
+  "slides": [
+    {
+      "slide": 1,
+      "referenceSize": {
+        "width": 1536,
+        "height": 1024
+      },
+      "contentFrame": [
+        125,
+        0,
+        1350,
+        900
+      ],
+      "fitMode": "contain",
+      "reflowed": false,
+      "userRequestedReflow": false,
+      "renderedAfterLastEdit": true,
+      "fullSizeInspected": true,
+      "comparisonArtifacts": {
+        "reference": "comparison/slide-01-reference.png",
+        "final": "comparison/slide-01-final.png",
+        "overlay": "comparison/slide-01-overlay.png",
+        "difference": "comparison/slide-01-difference.png"
+      },
+      "keyAnchors": [
+        {
+          "id": "main-diagram",
+          "critical": true,
+          "referenceBox": [
+            360,
+            180,
+            880,
+            560
+          ],
+          "finalBox": [
+            361,
+            179,
+            879,
+            561
+          ],
+          "styleMatch": true,
+          "zOrderMatch": true
+        }
+      ],
+      "connectors": [
+        {
+          "id": "main-flow",
+          "referencePoints": [
+            [500, 450],
+            [800, 420],
+            [1100, 470]
+          ],
+          "finalPoints": [
+            [501, 449],
+            [799, 421],
+            [1101, 469]
+          ],
+          "styleMatch": true,
+          "arrowheadDirectionVerified": true,
+          "sourcePixelsRemoved": true
+        }
+      ],
+      "unresolvedCriticalDifferences": [],
+      "visualQaPassed": true
+    }
+  ]
+}
