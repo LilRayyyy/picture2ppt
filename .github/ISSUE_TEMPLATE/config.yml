@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 使用与支持 / Usage and support
+    url: https://github.com/LilRayyyy/ppt-fidelity-editor/blob/main/SUPPORT.md
+    about: 提交问题前请先阅读支持指南 / Read the support guide before opening an issue.
+  - name: 安全问题 / Security
+    url: https://github.com/LilRayyyy/ppt-fidelity-editor/blob/main/SECURITY.md
+    about: 请勿在公开 Issue 中披露漏洞 / Do not disclose vulnerabilities in public issues.

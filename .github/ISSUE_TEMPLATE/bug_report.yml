@@ -1,0 +1,61 @@
+name: 缺陷报告 / Bug report
+description: 报告可复现的 Skill、验证器或文档问题 / Report a reproducible Skill, validator, or documentation problem
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢报告问题。请勿上传私密演示文稿、客户资料、密钥或个人信息。
+        Thank you for the report. Do not upload confidential decks, customer material, secrets, or personal data.
+  - type: input
+    id: environment
+    attributes:
+      label: Codex 或宿主版本与操作系统 / Host version and operating system
+      placeholder: Codex Desktop; macOS
+    validations:
+      required: true
+  - type: dropdown
+    id: input_type
+    attributes:
+      label: 输入类型 / Input type
+      options:
+        - Screenshot or image
+        - PDF
+        - PPTX
+        - Repository validation
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 最小复现步骤 / Minimal reproduction
+      description: 使用可公开或脱敏的材料说明如何复现 / Use public or sanitized material
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期行为 / Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为 / Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志或产物 / Logs or artifacts
+      description: 仅粘贴已移除密钥、个人信息和受保护内容的日志 / Include only sanitized logs
+      render: shell
+  - type: checkboxes
+    id: confidentiality
+    attributes:
+      label: 公开信息确认 / Public information confirmation
+      options:
+        - label: 我确认未上传私密源文件、客户材料、密钥、令牌或个人信息。 / I confirm that no confidential source, customer material, secret, token, or personal data is included.
+          required: true
