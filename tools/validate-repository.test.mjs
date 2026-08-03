@@ -13,7 +13,7 @@ async function write(root, relativePath, content = "fixture\n") {
 }
 
 async function createValidFixture(t) {
-  const root = await fs.mkdtemp(path.join(os.tmpdir(), "ppt-fidelity-editor-"));
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), "picture2ppt-"));
   t.after(() => fs.rm(root, { recursive: true, force: true }));
 
   const projectFiles = [
@@ -29,10 +29,10 @@ async function createValidFixture(t) {
     ".github/ISSUE_TEMPLATE/config.yml",
     ".github/workflows/validate.yml",
     "docs/PUBLIC_RELEASE_CHECKLIST.md",
-    "skills/ppt-fidelity-editor/agents/openai.yaml",
-    "skills/ppt-fidelity-editor/assets/fidelity-ledger.example.json",
-    "skills/ppt-fidelity-editor/assets/visual-qa-report.example.json",
-    "skills/ppt-fidelity-editor/scripts/check.mjs",
+    "skills/picture2ppt/agents/openai.yaml",
+    "skills/picture2ppt/assets/fidelity-ledger.example.json",
+    "skills/picture2ppt/assets/visual-qa-report.example.json",
+    "skills/picture2ppt/scripts/check.mjs",
   ];
 
   for (const file of projectFiles) await write(root, file);
@@ -44,7 +44,7 @@ async function createValidFixture(t) {
       "# Project",
       "[English](README.en.md)",
       "[License](LICENSE)",
-      "[Skill](skills/ppt-fidelity-editor/SKILL.md)",
+      "[Skill](skills/picture2ppt/SKILL.md)",
       "",
     ].join("\n"),
   );
@@ -60,10 +60,10 @@ async function createValidFixture(t) {
   );
   await write(
     root,
-    "skills/ppt-fidelity-editor/SKILL.md",
+    "skills/picture2ppt/SKILL.md",
     [
       "---",
-      "name: ppt-fidelity-editor",
+      "name: picture2ppt",
       "description: Use when reconstructing editable PowerPoint slides.",
       "---",
       "",
@@ -73,12 +73,12 @@ async function createValidFixture(t) {
       "",
     ].join("\n"),
   );
-  await write(root, "skills/ppt-fidelity-editor/references/guide.md", "# Guide\n");
+  await write(root, "skills/picture2ppt/references/guide.md", "# Guide\n");
 
   return {
     root,
-    skillRoot: path.join(root, "skills", "ppt-fidelity-editor"),
-    skillPath: path.join(root, "skills", "ppt-fidelity-editor", "SKILL.md"),
+    skillRoot: path.join(root, "skills", "picture2ppt"),
+    skillPath: path.join(root, "skills", "picture2ppt", "SKILL.md"),
   };
 }
 
@@ -105,7 +105,7 @@ test("rejects invalid Skill identity", async (t) => {
   );
   assert.match(
     (await validateRepository(root)).join("\n"),
-    /name must be ppt-fidelity-editor/,
+    /name must be picture2ppt/,
   );
 });
 

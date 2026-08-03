@@ -1,9 +1,13 @@
 ---
-name: ppt-fidelity-editor
-description: Use when reconstructing, editing, or auditing PowerPoint slides from screenshots, flattened images, PDFs, or low-editability PPTX files where 1:1 visual fidelity and independent editability of every visible semantic element are required.
+name: picture2ppt
+description: Reconstruct screenshots, raster images, PDFs, or low-editability PowerPoint slides into high-fidelity, semantically editable PPTX decks. Use when every visible text, shape, connector, chart, icon, illustration, and device must remain independently selectable while the reference composition, coordinates, and visual style are preserved.
 ---
 
-# PPT Fidelity Editor
+# picture2ppt
+
+`picture2ppt` converts a picture-first reference into an object-first PowerPoint. Treat the reference as a coordinate system and semantic inventory, not as a background image to paste into the deck.
+
+This skill is an orchestration contract: use the host presentation-authoring workflow for editable PPTX output and the available image-generation workflow for complex visual singletons. The bundled validators are guardrails; they do not replace re-import, rendering, side-by-side review, overlay review, or pixel-difference review.
 
 ## Core Contract
 
@@ -276,3 +280,7 @@ Do not preserve the left half as one image.
 - Use [scripts/validate-fidelity-ledger.mjs](scripts/validate-fidelity-ledger.mjs) before authoring.
 - Use [scripts/validate-visual-qa.mjs](scripts/validate-visual-qa.mjs) after the final render.
 - Use [scripts/verify-ppt-structure.mjs](scripts/verify-ppt-structure.mjs) for portable OOXML checks.
+
+## Successful reconstructions
+
+See [../../examples/README.md](../../examples/README.md) for rendered examples of editable reconstructions built with this workflow, including original/cleaned image comparisons produced with imagegen.

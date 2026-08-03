@@ -18,10 +18,10 @@ const REQUIRED_FILES = [
   ".github/ISSUE_TEMPLATE/config.yml",
   ".github/workflows/validate.yml",
   "docs/PUBLIC_RELEASE_CHECKLIST.md",
-  "skills/ppt-fidelity-editor/SKILL.md",
-  "skills/ppt-fidelity-editor/agents/openai.yaml",
-  "skills/ppt-fidelity-editor/assets/fidelity-ledger.example.json",
-  "skills/ppt-fidelity-editor/assets/visual-qa-report.example.json",
+  "skills/picture2ppt/SKILL.md",
+  "skills/picture2ppt/agents/openai.yaml",
+  "skills/picture2ppt/assets/fidelity-ledger.example.json",
+  "skills/picture2ppt/assets/visual-qa-report.example.json",
 ];
 
 const REQUIRED_SKILL_DIRECTORIES = ["agents", "assets", "references", "scripts"];
@@ -84,9 +84,9 @@ async function checkRequiredFiles(root, errors) {
     }
   }
 
-  const skillRoot = path.join(root, "skills", "ppt-fidelity-editor");
+  const skillRoot = path.join(root, "skills", "picture2ppt");
   for (const directory of REQUIRED_SKILL_DIRECTORIES) {
-    const relativePath = path.join("skills", "ppt-fidelity-editor", directory);
+    const relativePath = path.join("skills", "picture2ppt", directory);
     try {
       const stat = await fs.stat(path.join(skillRoot, directory));
       if (!stat.isDirectory()) errors.push(`required Skill directory is not a directory: ${relativePath}`);
@@ -123,8 +123,8 @@ async function checkSkillIdentity(skillRoot, errors) {
     errors.push("Skill frontmatter is missing or malformed");
     return;
   }
-  if (fields.get("name") !== "ppt-fidelity-editor") {
-    errors.push("Skill frontmatter name must be ppt-fidelity-editor");
+  if (fields.get("name") !== "picture2ppt") {
+    errors.push("Skill frontmatter name must be picture2ppt");
   }
   if (!fields.get("description")) {
     errors.push("Skill frontmatter description must be non-empty");
@@ -212,7 +212,7 @@ async function checkPublicCopy(root, errors) {
 export async function validateRepository(rootDirectory) {
   const errors = [];
   const root = path.resolve(rootDirectory);
-  const skillRoot = path.join(root, "skills", "ppt-fidelity-editor");
+  const skillRoot = path.join(root, "skills", "picture2ppt");
 
   await checkRequiredFiles(root, errors);
   await checkSkillIdentity(skillRoot, errors);

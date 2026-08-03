@@ -1,17 +1,19 @@
-# PPT Fidelity Editor
+# picture2ppt
 
 [English](README.en.md) | 简体中文
 
-[![Validate](https://github.com/LilRayyyy/ppt-fidelity-editor/actions/workflows/validate.yml/badge.svg)](https://github.com/LilRayyyy/ppt-fidelity-editor/actions/workflows/validate.yml)
+[![Validate](https://github.com/LilRayyyy/picture2ppt/actions/workflows/validate.yml/badge.svg)](https://github.com/LilRayyyy/picture2ppt/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-面向 Codex 的 PowerPoint 高保真重建与编辑 Skill：在尽量保持参考稿视觉效果的同时，把每个可命名的语义元素重建为可独立选择和编辑的 PowerPoint 对象。
+面向 Codex 的 PowerPoint 高保真重建与编辑 Skill：把参考图片变成可编辑的 PPT，而不是把图片贴到幻灯片上。在尽量保持参考稿视觉效果的同时，把每个可命名的语义元素重建为可独立选择和编辑的 PowerPoint 对象。
+
+本项目由 `ppt-fidelity-editor` 改名为 `picture2ppt`；安装入口、调用方式和 skill 元数据均已同步更新。
 
 ## 为什么需要它
 
 常见的“图片转 PPT”流程会把整页截图、半页区域或复合图表直接贴进幻灯片。页面看起来相似，但文字、图标、卡片、连接线和图表无法分别编辑。
 
-PPT Fidelity Editor 将视觉保真与语义可编辑性视为共同要求：
+picture2ppt 将视觉保真与语义可编辑性视为共同要求：
 
 > 每个可见语义元素都必须拥有唯一的最终表示，并且能够被独立选择。
 
@@ -56,19 +58,19 @@ PPT Fidelity Editor 将视觉保真与语义可编辑性视为共同要求：
 仓库公开后，可手动安装：
 
 ```bash
-git clone https://github.com/LilRayyyy/ppt-fidelity-editor.git
+git clone https://github.com/LilRayyyy/picture2ppt.git
 mkdir -p ~/.codex/skills
-cp -R ppt-fidelity-editor/skills/ppt-fidelity-editor ~/.codex/skills/ppt-fidelity-editor
+cp -R picture2ppt/skills/picture2ppt ~/.codex/skills/picture2ppt
 ```
 
-根据当前 Codex 宿主的要求重新启动或重新加载 Skills。安装包的入口文件是 [`skills/ppt-fidelity-editor/SKILL.md`](skills/ppt-fidelity-editor/SKILL.md)。
+根据当前 Codex 宿主的要求重新启动或重新加载 Skills。安装包的入口文件是 [`skills/picture2ppt/SKILL.md`](skills/picture2ppt/SKILL.md)。
 
 ## 快速开始
 
 在 Codex 中附加参考 PDF、图片或 PPTX，然后调用：
 
 ```text
-$ppt-fidelity-editor 将这个 PDF 重建为高保真、完全可编辑的 PowerPoint，并在交付前完成结构与视觉 QA。
+$picture2ppt 将这个 PDF 重建为高保真、完全可编辑的 PowerPoint，并在交付前完成结构与视觉 QA。
 ```
 
 Skill 会自行选择原生 PowerPoint 对象、原子化生成素材和无语义背景；只有缺少源文件、必要权限或关键能力时才会暂停。
@@ -94,7 +96,13 @@ Skill 会自行选择原生 PowerPoint 对象、原子化生成素材和无语�
 - 结构 QA 与视觉 QA 均通过；
 - 最后一次修改之后重新生成并检查比较产物。
 
-完整规则见 [`SKILL.md`](skills/ppt-fidelity-editor/SKILL.md) 和 [`references/`](skills/ppt-fidelity-editor/references/)。
+完整规则见 [`SKILL.md`](skills/picture2ppt/SKILL.md) 和 [`references/`](skills/picture2ppt/references/)。
+
+## 成功示例与图片清理对比
+
+[`examples/README.md`](examples/README.md) 展示了 OSI 七层模型、多级页表、进程与资源边界、线程共享与私有内容四个成功重建页面。
+
+多级页表和线程示例各保留了“原始渲染 / imagegen 清理后”的并排对比。原图保留右下角公众号广告字样，清理版只移除指定广告文字，用来说明 picture2ppt 如何在不破坏整页结构的情况下继续处理独立视觉资产。
 
 ## 项目结构
 
@@ -105,7 +113,8 @@ Skill 会自行选择原生 PowerPoint 对象、原子化生成素材和无语�
 ├── .github/                         # Issue、PR 与 CI 配置
 ├── docs/                            # 公开发布清单
 ├── tools/                           # 仓库级验证工具
-└── skills/ppt-fidelity-editor/
+├── examples/                       # 成功重建与原图/清理图对比图库
+└── skills/picture2ppt/
     ├── SKILL.md
     ├── agents/
     ├── assets/
@@ -122,11 +131,11 @@ Skill 会自行选择原生 PowerPoint 对象、原子化生成素材和无语�
 ```bash
 node --test tools/validate-repository.test.mjs
 node tools/validate-repository.mjs
-node --check skills/ppt-fidelity-editor/scripts/validate-fidelity-ledger.mjs
-node --check skills/ppt-fidelity-editor/scripts/validate-visual-qa.mjs
-node --check skills/ppt-fidelity-editor/scripts/verify-ppt-structure.mjs
-node skills/ppt-fidelity-editor/scripts/validate-fidelity-ledger.mjs \
-  skills/ppt-fidelity-editor/assets/fidelity-ledger.example.json
+node --check skills/picture2ppt/scripts/validate-fidelity-ledger.mjs
+node --check skills/picture2ppt/scripts/validate-visual-qa.mjs
+node --check skills/picture2ppt/scripts/verify-ppt-structure.mjs
+node skills/picture2ppt/scripts/validate-fidelity-ledger.mjs \
+  skills/picture2ppt/assets/fidelity-ledger.example.json
 ```
 
 `verify-ppt-structure.mjs` 在实际检查 PPTX 时需要 `jszip`，也可通过 `PPT_FIDELITY_NODE_MODULES` 指向包含 `jszip` 的 `node_modules`。

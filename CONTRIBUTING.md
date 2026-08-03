@@ -1,18 +1,18 @@
 # 贡献指南
 
-感谢你帮助改进 PPT Fidelity Editor。请保持改动聚焦、可验证，并尊重项目的视觉保真与语义可编辑契约。
+感谢你帮助改进 picture2ppt。请保持改动聚焦、可验证，并尊重项目的视觉保真与语义可编辑契约。
 
 ## 开始之前
 
 - 使用 Node.js 22 或更新版本运行仓库检查；
-- 阅读 [README.md](README.md) 和 [`SKILL.md`](skills/ppt-fidelity-editor/SKILL.md)；
+- 阅读 [README.md](README.md) 和 [`SKILL.md`](skills/picture2ppt/SKILL.md)；
 - 安全问题不要提交公开 Issue，请遵循 [SECURITY.md](SECURITY.md)；
 - 大范围行为变更建议先提交功能请求，说明使用场景和预期影响。
 
 ## 仓库边界
 
 - 项目文档、社区政策和 CI 位于仓库根目录及 `.github/`；
-- 可安装 Skill 只位于 `skills/ppt-fidelity-editor/`；
+- 可安装 Skill 只位于 `skills/picture2ppt/`；
 - 不要在 Skill 包内添加 README、许可证、贡献指南或其他项目级文件；
 - 不要在无关改动中重构 fidelity、editability、provider routing 或 QA 规则。
 
@@ -30,14 +30,14 @@
 ```bash
 node --test tools/validate-repository.test.mjs
 node tools/validate-repository.mjs
-node --check skills/ppt-fidelity-editor/scripts/validate-fidelity-ledger.mjs
-node --check skills/ppt-fidelity-editor/scripts/validate-visual-qa.mjs
-node --check skills/ppt-fidelity-editor/scripts/verify-ppt-structure.mjs
-node skills/ppt-fidelity-editor/scripts/validate-fidelity-ledger.mjs \
-  skills/ppt-fidelity-editor/assets/fidelity-ledger.example.json
+node --check skills/picture2ppt/scripts/validate-fidelity-ledger.mjs
+node --check skills/picture2ppt/scripts/validate-visual-qa.mjs
+node --check skills/picture2ppt/scripts/verify-ppt-structure.mjs
+node skills/picture2ppt/scripts/validate-fidelity-ledger.mjs \
+  skills/picture2ppt/assets/fidelity-ledger.example.json
 ```
 
-如果本机提供 Codex `skill-creator`，还应对 `skills/ppt-fidelity-editor/` 运行其 Skill 结构校验。
+如果本机提供 Codex `skill-creator`，还应对 `skills/picture2ppt/` 运行其 Skill 结构校验。
 
 ## Skill 修改要求
 
@@ -66,10 +66,10 @@ Pull Request 应：
 
 # Contributing
 
-Thank you for improving PPT Fidelity Editor. Keep each change focused, verifiable, and consistent with the joint visual-fidelity and semantic-editability contract.
+Thank you for improving picture2ppt. Keep each change focused, verifiable, and consistent with the joint visual-fidelity and semantic-editability contract.
 
 - Use Node.js 22 or newer.
-- Keep the installable package inside `skills/ppt-fidelity-editor/`.
+- Keep the installable package inside `skills/picture2ppt/`.
 - Update both READMEs for user-visible behavior.
 - Write a failing test before changing JavaScript behavior.
 - Run the validation commands above before opening a Pull Request.

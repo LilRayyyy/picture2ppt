@@ -24,9 +24,9 @@ Use the Feature Request form to describe the user problem, use case, proposed be
 
 ## 使用问题 / Usage questions
 
-在仓库启用 Discussions 之前，可提交普通 Issue，并在标题中注明“使用问题 / Usage”。请先阅读 [README.md](README.md) 和 [`SKILL.md`](skills/ppt-fidelity-editor/SKILL.md)。
+在仓库启用 Discussions 之前，可提交普通 Issue，并在标题中注明“使用问题 / Usage”。请先阅读 [README.md](README.md) 和 [`SKILL.md`](skills/picture2ppt/SKILL.md)。
 
-Until Discussions is enabled, open a regular Issue with “Usage” in the title. Read [README.en.md](README.en.md) and [`SKILL.md`](skills/ppt-fidelity-editor/SKILL.md) first.
+Until Discussions is enabled, open a regular Issue with “Usage” in the title. Read [README.en.md](README.en.md) and [`SKILL.md`](skills/picture2ppt/SKILL.md) first.
 
 ## 安全问题 / Security
 

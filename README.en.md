@@ -1,17 +1,19 @@
-# PPT Fidelity Editor
+# picture2ppt
 
 English | [简体中文](README.md)
 
-[![Validate](https://github.com/LilRayyyy/ppt-fidelity-editor/actions/workflows/validate.yml/badge.svg)](https://github.com/LilRayyyy/ppt-fidelity-editor/actions/workflows/validate.yml)
+[![Validate](https://github.com/LilRayyyy/picture2ppt/actions/workflows/validate.yml/badge.svg)](https://github.com/LilRayyyy/picture2ppt/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A Codex Skill for high-fidelity PowerPoint reconstruction and editing. It preserves the reference composition while rebuilding every nameable semantic element as an independently selectable and editable PowerPoint object.
+A Codex Skill for high-fidelity PowerPoint reconstruction and editing. It turns a reference picture into an editable PowerPoint instead of pasting the picture into a slide, preserving the reference composition while rebuilding every nameable semantic element as an independently selectable and editable object.
+
+This repository was renamed from `ppt-fidelity-editor` to `picture2ppt`; the install path, invocation, and Skill metadata are updated together.
 
 ## Why this exists
 
 Many image-to-PowerPoint workflows paste a full slide, a large screenshot region, or a composite diagram into the deck. The result may look similar, but its text, icons, cards, connectors, and charts cannot be edited independently.
 
-PPT Fidelity Editor treats visual fidelity and semantic editability as joint requirements:
+picture2ppt treats visual fidelity and semantic editability as joint requirements:
 
 > Every visible semantic element must have exactly one final representation and remain independently selectable.
 
@@ -56,19 +58,19 @@ When a complex element requires image generation and the host does not expose a 
 After the repository becomes public, install it manually:
 
 ```bash
-git clone https://github.com/LilRayyyy/ppt-fidelity-editor.git
+git clone https://github.com/LilRayyyy/picture2ppt.git
 mkdir -p ~/.codex/skills
-cp -R ppt-fidelity-editor/skills/ppt-fidelity-editor ~/.codex/skills/ppt-fidelity-editor
+cp -R picture2ppt/skills/picture2ppt ~/.codex/skills/picture2ppt
 ```
 
-Restart or reload Skills when required by the current Codex host. The package entry point is [`skills/ppt-fidelity-editor/SKILL.md`](skills/ppt-fidelity-editor/SKILL.md).
+Restart or reload Skills when required by the current Codex host. The package entry point is [`skills/picture2ppt/SKILL.md`](skills/picture2ppt/SKILL.md).
 
 ## Quick start
 
 Attach a reference PDF, image, or PPTX in Codex, then invoke:
 
 ```text
-$ppt-fidelity-editor Reconstruct this PDF as a high-fidelity, fully editable PowerPoint and complete structure and visual QA before delivery.
+$picture2ppt Reconstruct this PDF as a high-fidelity, fully editable PowerPoint and complete structure and visual QA before delivery.
 ```
 
 The Skill chooses among native PowerPoint objects, atomic generated assets, and semantic-free backgrounds. It pauses only when required source material, permission, or capability is missing.
@@ -94,7 +96,13 @@ Before delivery:
 - both structure QA and visual QA pass;
 - comparison artifacts are regenerated and inspected after the last edit.
 
-See [`SKILL.md`](skills/ppt-fidelity-editor/SKILL.md) and [`references/`](skills/ppt-fidelity-editor/references/) for the complete contract.
+See [`SKILL.md`](skills/picture2ppt/SKILL.md) and [`references/`](skills/picture2ppt/references/) for the complete contract.
+
+## Successful examples and image-cleanup comparisons
+
+[`examples/README.md`](examples/README.md) shows four successful reconstructions: the OSI seven-layer model, multi-level page tables, process/resource boundaries, and thread-shared/private content.
+
+The page-table and thread examples preserve an “original render / imagegen cleaned render” pair. The original keeps the footer promotion text; the cleaned version removes only the specified footer text, illustrating how picture2ppt can refine an isolated visual asset without flattening or redesigning the slide.
 
 ## Repository structure
 
@@ -105,7 +113,8 @@ See [`SKILL.md`](skills/ppt-fidelity-editor/SKILL.md) and [`references/`](skills
 ├── .github/                         # Issue, PR, and CI configuration
 ├── docs/                            # Public release checklist
 ├── tools/                           # Repository-level validators
-└── skills/ppt-fidelity-editor/
+├── examples/                       # Successful reconstructions and cleanup comparisons
+└── skills/picture2ppt/
     ├── SKILL.md
     ├── agents/
     ├── assets/
@@ -122,11 +131,11 @@ Run from the repository root:
 ```bash
 node --test tools/validate-repository.test.mjs
 node tools/validate-repository.mjs
-node --check skills/ppt-fidelity-editor/scripts/validate-fidelity-ledger.mjs
-node --check skills/ppt-fidelity-editor/scripts/validate-visual-qa.mjs
-node --check skills/ppt-fidelity-editor/scripts/verify-ppt-structure.mjs
-node skills/ppt-fidelity-editor/scripts/validate-fidelity-ledger.mjs \
-  skills/ppt-fidelity-editor/assets/fidelity-ledger.example.json
+node --check skills/picture2ppt/scripts/validate-fidelity-ledger.mjs
+node --check skills/picture2ppt/scripts/validate-visual-qa.mjs
+node --check skills/picture2ppt/scripts/verify-ppt-structure.mjs
+node skills/picture2ppt/scripts/validate-fidelity-ledger.mjs \
+  skills/picture2ppt/assets/fidelity-ledger.example.json
 ```
 
 When it is used on a real PPTX, `verify-ppt-structure.mjs` requires `jszip`. Alternatively, set `PPT_FIDELITY_NODE_MODULES` to a `node_modules` directory that contains `jszip`.
