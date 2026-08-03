@@ -1,4 +1,4 @@
 interface:
-  display_name: "PPT Fidelity Editor"
-  short_description: "Rebuild every slide element as an editable object"
-  default_prompt: "Use $ppt-fidelity-editor to reconstruct this reference as a 1:1 high-fidelity PowerPoint with every semantic element independently editable. Preserve the reference coordinate system without unrequested reflow, split multi-part generated visuals into atomic stickers, match connector geometry, and do not deliver until both structure and visual QA pass."
+  display_name: "picture2ppt"
+  short_description: "Turn reference pictures into editable PowerPoint slides"
+  default_prompt: "Use $picture2ppt to reconstruct this reference as a 1:1 high-fidelity PowerPoint with every semantic element independently editable. Preserve the reference coordinate system without unrequested reflow, split multi-part generated visuals into atomic stickers, match connector geometry, and do not deliver until both structure and visual QA pass."

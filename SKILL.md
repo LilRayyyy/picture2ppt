@@ -1,9 +1,13 @@
 ---
-name: ppt-fidelity-editor
-description: Use when reconstructing, editing, or auditing PowerPoint slides from screenshots, flattened images, PDFs, or low-editability PPTX files where 1:1 visual fidelity and independent editability of every visible semantic element are required.
+name: picture2ppt
+description: Reconstruct screenshots, raster images, PDFs, or low-editability PowerPoint slides into high-fidelity, semantically editable PPTX decks. Use when every visible text, shape, connector, chart, icon, illustration, and device must remain independently selectable while the reference composition, coordinates, and visual style are preserved.
 ---
 
-# PPT Fidelity Editor
+# picture2ppt
+
+`picture2ppt` converts a picture-first reference into an object-first PowerPoint. Treat the reference as a coordinate system and semantic inventory, not as a background image to paste into the deck.
+
+This skill is an orchestration contract: use the host presentation-authoring workflow (`@oai/artifact-tool`) for editable PPTX output and the available image-generation workflow for complex visual singletons. The bundled validators are guardrails; they do not replace re-import, rendering, side-by-side review, overlay review, or pixel-difference review.
 
 ## Core Contract
 
@@ -49,7 +53,9 @@ Do not pause for ordinary choices about native shapes versus generated stickers,
 
 ## Required Companion Workflow
 
-Use the host's presentation-authoring skill or toolchain. On Codex, use the available presentations skill and its required JavaScript/Artifact Tool workflow.
+Use the host's presentation-authoring skill or toolchain. On Codex, use the available presentations skill and its required JavaScript/Artifact Tool workflow. Author in an ES module with `@oai/artifact-tool`; do not use `python-pptx` or the legacy Python artifact API.
+
+Use stable Artifact Tool object names that match the ledger `id` values. After export, re-import the PPTX and inspect object names, types, bounds, images, notes, and z-order. Object counts alone are not sufficient evidence of semantic editability.
 
 Read [references/fidelity-decisions.md](references/fidelity-decisions.md) before choosing representations. Read [references/image-provider-routing.md](references/image-provider-routing.md) whenever difficult visual elements need redrawing or generation.
 
@@ -227,6 +233,8 @@ node scripts/validate-visual-qa.mjs <visual-qa-report.json>
 
 Do not deliver until both the structure report and visual QA report pass. Generating an overlay without reviewing and acting on it does not satisfy QA.
 
+When producing comparison reports in code, compute the reference/final dimensions, overlay, pixel difference, and diagnostic metrics from the rendered files. Treat report booleans such as `styleMatch`, `sourcePixelsRemoved`, and `visualQaPassed` as claims that must be backed by the reviewed artifacts, not as a substitute for the review.
+
 ## Hard Gates
 
 Stop and revise if any condition is true:
@@ -276,3 +284,7 @@ Do not preserve the left half as one image.
 - Use [scripts/validate-fidelity-ledger.mjs](scripts/validate-fidelity-ledger.mjs) before authoring.
 - Use [scripts/validate-visual-qa.mjs](scripts/validate-visual-qa.mjs) after the final render.
 - Use [scripts/verify-ppt-structure.mjs](scripts/verify-ppt-structure.mjs) for portable OOXML checks.
+
+## Successful reconstructions
+
+See [examples/README.md](examples/README.md) for rendered examples of editable reconstructions built with this workflow.
