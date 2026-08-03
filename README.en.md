@@ -100,9 +100,31 @@ See [`SKILL.md`](skills/picture2ppt/SKILL.md) and [`references/`](skills/picture
 
 ## Successful examples and image-cleanup comparisons
 
-[`examples/README.md`](examples/README.md) shows four successful reconstructions: the OSI seven-layer model, multi-level page tables, process/resource boundaries, and thread-shared/private content.
+The images below are embedded directly so the repository home page shows the successful reconstructions without requiring a separate folder click. Each example was rebuilt as independently editable text, shapes, connectors, tables, and/or atomic generated stickers; the final deck does not use a composite full-slide screenshot as its background.
 
 The page-table and thread examples preserve an “original render / imagegen cleaned render” pair. The original keeps the footer promotion text; the cleaned version removes only the specified footer text, illustrating how picture2ppt can refine an isolated visual asset without flattening or redesigning the slide.
+
+### Multi-level page tables: original / cleaned
+
+| Original render | Imagegen cleaned render |
+| --- | --- |
+| ![Original multi-level page tables](examples/pagetable-multilevel.png) | ![Cleaned multi-level page tables](examples/pagetable-multilevel-clean.png) |
+
+### OSI seven-layer model
+
+![OSI seven-layer model](examples/osi-seven-layer.png)
+
+### Process and resource boundaries
+
+![Process and resource boundaries](examples/process-resource-boundary.png)
+
+### Thread shared and private content: original / cleaned
+
+| Original render | Imagegen cleaned render |
+| --- | --- |
+| ![Original thread shared and private content](examples/thread-shared-private.png) | ![Cleaned thread shared and private content](examples/thread-shared-private-clean.png) |
+
+[`examples/README.md`](examples/README.md) remains as a standalone gallery index for direct image browsing and reuse.
 
 ## Repository structure
 
