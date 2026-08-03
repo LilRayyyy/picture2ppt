@@ -283,4 +283,4 @@ Do not preserve the left half as one image.
 
 ## Successful reconstructions
 
-See [../../examples/README.md](../../examples/README.md) for rendered examples of editable reconstructions built with this workflow, including original/cleaned image comparisons produced with imagegen.
+See [../../examples/README.md](../../examples/README.md) for rendered examples of editable reconstructions built with this workflow, including original/rendered comparisons produced by the picture2ppt skill.

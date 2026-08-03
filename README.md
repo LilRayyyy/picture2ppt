@@ -100,29 +100,21 @@ Skill 会自行选择原生 PowerPoint 对象、原子化生成素材和无语�
 
 ## 成功示例与图片清理对比
 
-下面的图片直接展示成功重建后的页面。每个示例都由可独立选择的文字、形状、连接符、表格和/或原子化生成贴图组成，最终 PPT 没有把整页截图作为复合底图。
+下面的对比图直接展示成功重建后的页面。每个示例都由可独立选择的文字、形状、连接符、表格和/或原子化生成贴图组成，最终 PPT 没有把整页截图作为复合底图。
 
-多级页表和线程示例各保留了“原始渲染 / imagegen 清理后”的并排对比。原图保留右下角公众号广告字样，清理版只移除指定广告文字，用来说明 picture2ppt 如何在不破坏整页结构的情况下继续处理独立视觉资产。
+多级页表和线程示例各保留了“原始渲染 / 经过 picture2ppt skill 渲染后”的并排对比。原图保留右下角公众号广告字样，经过 skill 渲染后的版本只移除指定广告文字，用来说明 picture2ppt 如何在不破坏整页结构的情况下继续处理独立视觉资产。
 
-### 多级页表：原始渲染 / 清理后
+### 多级页表：原始渲染 / 经过 skill 渲染后
 
-| 原始渲染 | imagegen 清理后 |
+| 原始渲染 | 经过 picture2ppt skill 渲染后 |
 | --- | --- |
-| ![多级页表原始渲染](examples/pagetable-multilevel.png) | ![多级页表清理后](examples/pagetable-multilevel-clean.png) |
+| ![多级页表原始渲染](examples/pagetable-multilevel.png) | ![多级页表经过 picture2ppt skill 渲染后](examples/pagetable-multilevel-clean.png) |
 
-### OSI 七层模型
+### 线程共享与私有内容：原始渲染 / 经过 skill 渲染后
 
-![OSI 七层模型](examples/osi-seven-layer.png)
-
-### 进程与资源边界
-
-![进程与资源边界](examples/process-resource-boundary.png)
-
-### 线程共享与私有内容：原始渲染 / 清理后
-
-| 原始渲染 | imagegen 清理后 |
+| 原始渲染 | 经过 picture2ppt skill 渲染后 |
 | --- | --- |
-| ![线程共享与私有内容原始渲染](examples/thread-shared-private.png) | ![线程共享与私有内容清理后](examples/thread-shared-private-clean.png) |
+| ![线程共享与私有内容原始渲染](examples/thread-shared-private.png) | ![线程共享与私有内容经过 picture2ppt skill 渲染后](examples/thread-shared-private-clean.png) |
 
 [`examples/README.md`](examples/README.md) 仍保留为独立图库索引，便于单独查看和引用这些示例。
 
