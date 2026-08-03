@@ -25,8 +25,8 @@ jobs:
         run: node tools/validate-repository.mjs
       - name: Check Skill scripts
         run: |
-          node --check skills/ppt-fidelity-editor/scripts/validate-fidelity-ledger.mjs
-          node --check skills/ppt-fidelity-editor/scripts/validate-visual-qa.mjs
-          node --check skills/ppt-fidelity-editor/scripts/verify-ppt-structure.mjs
+          node --check skills/picture2ppt/scripts/validate-fidelity-ledger.mjs
+          node --check skills/picture2ppt/scripts/validate-visual-qa.mjs
+          node --check skills/picture2ppt/scripts/verify-ppt-structure.mjs
       - name: Validate example fidelity ledger
-        run: node skills/ppt-fidelity-editor/scripts/validate-fidelity-ledger.mjs skills/ppt-fidelity-editor/assets/fidelity-ledger.example.json
+        run: node skills/picture2ppt/scripts/validate-fidelity-ledger.mjs skills/picture2ppt/assets/fidelity-ledger.example.json
