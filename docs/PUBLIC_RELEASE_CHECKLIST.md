@@ -37,10 +37,8 @@
 ## 验证
 
 - [ ] 最新 `main` 的 Validate 工作流成功。
-- [ ] 本地仓库验证器成功。
+- [ ] `npm test` 与 `npm run validate` 成功（含示例 ledger、脚本语法和 `tsc --checkJs`）。
 - [ ] Codex Skill 结构验证成功。
-- [ ] 三个 Skill 脚本通过语法检查。
-- [ ] fidelity ledger 示例通过验证。
 - [ ] 安装命令在一个干净的 Codex 环境中完成试装。
 
 ## 公开操作

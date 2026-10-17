@@ -55,7 +55,7 @@ When a complex element requires image generation and the host does not expose a 
 
 ## Installation
 
-After the repository becomes public, install it manually:
+The repository is public. Install the Skill manually:
 
 ```bash
 git clone https://github.com/LilRayyyy/picture2ppt.git
@@ -123,10 +123,12 @@ The page-table and thread examples preserve an “original render / rendered by 
 ```text
 .
 ├── README.md / README.en.md
+├── AGENTS.md
+├── package.json
 ├── LICENSE
 ├── .github/                         # Issue, PR, and CI configuration
 ├── docs/                            # Public release checklist
-├── tools/                           # Repository-level validators
+├── tools/                           # Repository validators and script tests
 ├── examples/                       # Successful reconstructions and cleanup comparisons
 └── skills/picture2ppt/
     ├── SKILL.md
@@ -143,16 +145,12 @@ Project documentation is separated from the installable Skill package so reposit
 Run from the repository root:
 
 ```bash
-node --test tools/validate-repository.test.mjs
-node tools/validate-repository.mjs
-node --check skills/picture2ppt/scripts/validate-fidelity-ledger.mjs
-node --check skills/picture2ppt/scripts/validate-visual-qa.mjs
-node --check skills/picture2ppt/scripts/verify-ppt-structure.mjs
-node skills/picture2ppt/scripts/validate-fidelity-ledger.mjs \
-  skills/picture2ppt/assets/fidelity-ledger.example.json
+npm install
+npm test
+npm run validate
 ```
 
-When it is used on a real PPTX, `verify-ppt-structure.mjs` requires `jszip`. Alternatively, set `PPT_FIDELITY_NODE_MODULES` to a `node_modules` directory that contains `jszip`.
+`npm test` runs the repository tests and the pass and typical failure cases for the three validators. `npm run validate` checks this checkout, the example fidelity ledger, script syntax, and types with `tsc --checkJs`. `jszip` is installed from `package.json`. Set `PPT_FIDELITY_NODE_MODULES` only when a copied Skill directory is no longer next to this repository's `node_modules`.
 
 ## Known limitations
 

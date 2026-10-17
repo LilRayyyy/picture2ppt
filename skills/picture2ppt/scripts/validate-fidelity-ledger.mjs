@@ -1,14 +1,47 @@
 import fs from "node:fs/promises";
 
+/**
+ * @typedef {object} LedgerElement
+ * @property {string} [id]
+ * @property {string} [visualKey]
+ * @property {number} [slide]
+ * @property {string} [type]
+ * @property {string} [representation]
+ * @property {string} [backgroundAction]
+ * @property {number[]} [bbox]
+ * @property {number[][]} [points]
+ * @property {boolean} [semantic]
+ * @property {boolean} [atomic]
+ * @property {boolean} [editable]
+ * @property {boolean} [containsText]
+ * @property {string} [assetOrigin]
+ * @property {string[]} [semanticRoles]
+ * @property {string[]} [visibleSubcomponents]
+ * @property {string} [visualComplexity]
+ * @property {string} [constructionMethod]
+ * @property {boolean} [referenceIsEmoji]
+ * @property {boolean} [usesEmoji]
+ * @property {boolean} [usesSymbolFont]
+ * @property {boolean} [usesClipart]
+ * @property {string} [largeAssetJustification]
+ * @property {number} [angle]
+ */
+
+/**
+ * @typedef {object} FidelityLedger
+ * @property {{ width?: number, height?: number }} [slideSize]
+ * @property {LedgerElement[]} [elements]
+ */
+
 const ledgerPath = process.argv[2];
 if (!ledgerPath) {
   console.error("Usage: node validate-fidelity-ledger.mjs <ledger.json>");
   process.exit(2);
 }
 
-const ledger = JSON.parse(await fs.readFile(ledgerPath, "utf8"));
-const width = ledger?.slideSize?.width;
-const height = ledger?.slideSize?.height;
+const ledger = /** @type {FidelityLedger} */ (JSON.parse(await fs.readFile(ledgerPath, "utf8")));
+const width = /** @type {number} */ (ledger?.slideSize?.width);
+const height = /** @type {number} */ (ledger?.slideSize?.height);
 const elements = ledger?.elements;
 const errors = [];
 
@@ -21,13 +54,20 @@ if (!Array.isArray(elements) || elements.length === 0) {
 
 const ids = new Set();
 const visualKeys = new Set();
+/** @type {Set<unknown>} */
 const representations = new Set(["native", "sticker", "background"]);
+/** @type {Set<unknown>} */
 const backgroundActions = new Set(["remove-before-overlay", "retain", "none"]);
+/** @type {Set<unknown>} */
 const assetOrigins = new Set(["native-rebuild", "generated", "source-asset", "ambient"]);
+/** @type {Set<unknown>} */
 const sourceAssetTypes = new Set(["photo", "logo", "brand-asset"]);
+/** @type {Set<unknown>} */
 const prohibitedCompositeTypes = new Set(["screenshot", "slide-crop", "composite-region"]);
 const requiredBooleanFields = ["semantic", "atomic", "editable", "containsText"];
+/** @type {Set<unknown>} */
 const visualComplexities = new Set(["simple", "complex", "not-applicable"]);
+/** @type {Set<unknown>} */
 const constructionMethods = new Set([
   "native-text",
   "native-shapes",
@@ -36,6 +76,7 @@ const constructionMethods = new Set([
   "source-asset",
   "ambient"
 ]);
+/** @type {Set<unknown>} */
 const iconLikeTypes = new Set([
   "icon",
   "pictogram",
@@ -46,13 +87,18 @@ const iconLikeTypes = new Set([
 ]);
 const iconBooleanFields = ["referenceIsEmoji", "usesEmoji", "usesSymbolFont", "usesClipart"];
 
-const pointInside = ([x, y]) =>
-  Number.isFinite(x) &&
-  Number.isFinite(y) &&
-  x >= 0 &&
-  y >= 0 &&
-  x <= width &&
-  y <= height;
+/** @param {number[]} point */
+const pointInside = (point) => {
+  const [x, y] = point;
+  return (
+    Number.isFinite(x) &&
+    Number.isFinite(y) &&
+    x >= 0 &&
+    y >= 0 &&
+    x <= width &&
+    y <= height
+  );
+};
 
 for (const [index, element] of (elements || []).entries()) {
   const label = element?.id || `elements[${index}]`;
@@ -72,7 +118,7 @@ for (const [index, element] of (elements || []).entries()) {
     visualKeys.add(element.visualKey);
   }
 
-  if (!Number.isInteger(element?.slide) || element.slide < 1) {
+  if (!Number.isInteger(element?.slide) || /** @type {number} */ (element.slide) < 1) {
     errors.push(`${label}: slide must be a positive integer`);
   }
   if (!representations.has(element?.representation)) {
@@ -82,8 +128,9 @@ for (const [index, element] of (elements || []).entries()) {
     errors.push(`${label}: invalid backgroundAction`);
   }
 
+  const elementFields = /** @type {Record<string, unknown>} */ (element ?? {});
   for (const field of requiredBooleanFields) {
-    if (typeof element?.[field] !== "boolean") {
+    if (typeof elementFields[field] !== "boolean") {
       errors.push(`${label}: ${field} must be a boolean`);
     }
   }
@@ -106,7 +153,7 @@ for (const [index, element] of (elements || []).entries()) {
   const isIconLike = iconLikeTypes.has(element?.type);
   if (isIconLike) {
     for (const field of iconBooleanFields) {
-      if (typeof element?.[field] !== "boolean") {
+      if (typeof elementFields[field] !== "boolean") {
         errors.push(`${label}: icon-like elements require boolean ${field}`);
       }
     }
@@ -217,7 +264,7 @@ for (const [index, element] of (elements || []).entries()) {
         `${label}: generation does not make a composite atomic; a sticker must contain exactly one visible subcomponent`
       );
     }
-    if (!["generated", "source-asset"].includes(element?.assetOrigin)) {
+    if (!["generated", "source-asset"].includes(/** @type {string} */ (element?.assetOrigin))) {
       errors.push(`${label}: stickers must be newly generated or an allowed independent source asset`);
     }
     const expectedStickerMethod =
@@ -309,14 +356,15 @@ if (errors.length) {
   process.exit(1);
 }
 
-const connectors = elements.filter((element) => element.type === "connector");
+const checkedElements = /** @type {LedgerElement[]} */ (elements);
+const connectors = checkedElements.filter((element) => element.type === "connector");
 for (const connector of connectors) {
-  if (connector.points.length === 2) {
+  if (Array.isArray(connector.points) && connector.points.length === 2) {
     const [[x1, y1], [x2, y2]] = connector.points;
     connector.angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
   }
 }
 
 console.log(
-  `PASS: ${elements.length} elements, ${ids.size} unique ids, ${visualKeys.size} unique visual layers, ${connectors.length} connectors`
+  `PASS: ${checkedElements.length} elements, ${ids.size} unique ids, ${visualKeys.size} unique visual layers, ${connectors.length} connectors`
 );

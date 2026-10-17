@@ -28,13 +28,9 @@
 ## 本地验证
 
 ```bash
-node --test tools/validate-repository.test.mjs
-node tools/validate-repository.mjs
-node --check skills/picture2ppt/scripts/validate-fidelity-ledger.mjs
-node --check skills/picture2ppt/scripts/validate-visual-qa.mjs
-node --check skills/picture2ppt/scripts/verify-ppt-structure.mjs
-node skills/picture2ppt/scripts/validate-fidelity-ledger.mjs \
-  skills/picture2ppt/assets/fidelity-ledger.example.json
+npm install
+npm test
+npm run validate
 ```
 
 如果本机提供 Codex `skill-creator`，还应对 `skills/picture2ppt/` 运行其 Skill 结构校验。

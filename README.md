@@ -55,7 +55,7 @@ picture2ppt 将视觉保真与语义可编辑性视为共同要求：
 
 ## 安装
 
-仓库公开后，可手动安装：
+仓库已经公开，在本机手动安装：
 
 ```bash
 git clone https://github.com/LilRayyyy/picture2ppt.git
@@ -123,10 +123,12 @@ Skill 会自行选择原生 PowerPoint 对象、原子化生成素材和无语�
 ```text
 .
 ├── README.md / README.en.md
+├── AGENTS.md
+├── package.json
 ├── LICENSE
 ├── .github/                         # Issue、PR 与 CI 配置
 ├── docs/                            # 公开发布清单
-├── tools/                           # 仓库级验证工具
+├── tools/                           # 仓库级验证工具与脚本测试
 ├── examples/                       # 成功重建与原图/清理图对比图库
 └── skills/picture2ppt/
     ├── SKILL.md
@@ -143,16 +145,12 @@ Skill 会自行选择原生 PowerPoint 对象、原子化生成素材和无语�
 从仓库根目录运行：
 
 ```bash
-node --test tools/validate-repository.test.mjs
-node tools/validate-repository.mjs
-node --check skills/picture2ppt/scripts/validate-fidelity-ledger.mjs
-node --check skills/picture2ppt/scripts/validate-visual-qa.mjs
-node --check skills/picture2ppt/scripts/verify-ppt-structure.mjs
-node skills/picture2ppt/scripts/validate-fidelity-ledger.mjs \
-  skills/picture2ppt/assets/fidelity-ledger.example.json
+npm install
+npm test
+npm run validate
 ```
 
-`verify-ppt-structure.mjs` 在实际检查 PPTX 时需要 `jszip`，也可通过 `PPT_FIDELITY_NODE_MODULES` 指向包含 `jszip` 的 `node_modules`。
+`npm test` 跑仓库结构测试，以及三个校验脚本的通过和典型失败用例。`npm run validate` 检查当前仓库、示例 fidelity ledger、脚本语法，并用 `tsc --checkJs` 做类型检查。`jszip` 由 `package.json` 安装。只有在 Skill 目录被单独复制、旁边没有本仓库的 `node_modules` 时，才把 `PPT_FIDELITY_NODE_MODULES` 指到含有 `jszip` 的 `node_modules`。
 
 ## 已知限制
 
