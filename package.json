@@ -1,0 +1,21 @@
+{
+  "name": "picture2ppt",
+  "private": true,
+  "description": "Repository checks for the picture2ppt Codex skill.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test tools/*.test.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "validate": "node tools/validate-repository.mjs && node tools/validate-skill-assets.mjs && tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "jszip": "^3.10.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,6 +1,53 @@
+import { createRequire } from "node:module";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { pathToFileURL } from "node:url";
+
+/**
+ * @typedef {typeof import("jszip")} JSZipConstructor
+ */
+
+/**
+ * @typedef {object} StructureExpectations
+ * @property {number} [slides]
+ * @property {number} [minTextboxes]
+ * @property {number} [minShapes]
+ * @property {number} [minImages]
+ * @property {number} [minNotes]
+ * @property {string[]} [requiredNames]
+ * @property {string[]} [forbiddenNames]
+ */
+
+/**
+ * Prefer the jszip installed for this repository. PPT_FIDELITY_NODE_MODULES is
+ * an optional override for a Skill directory copied away from that install.
+ *
+ * @returns {Promise<JSZipConstructor | null>}
+ */
+async function loadJSZip() {
+  try {
+    const loaded = /** @type {{ default?: JSZipConstructor }} */ (await import("jszip"));
+    if (loaded.default) return loaded.default;
+  } catch {
+    // The installed skill directory may not sit next to this repo's node_modules.
+  }
+
+  const moduleRoot = process.env.PPT_FIDELITY_NODE_MODULES;
+  if (moduleRoot) {
+    try {
+      const requireFrom = createRequire(path.join(moduleRoot, "package.json"));
+      return /** @type {JSZipConstructor} */ (requireFrom("jszip"));
+    } catch {
+      // Fall through to the guidance below.
+    }
+  }
+  return null;
+}
+
+/** @param {string} name */
+function slideNumber(name) {
+  const match = name.match(/\d+/);
+  return match ? Number(match[0]) : Number.NaN;
+}
 
 const [pptxPath, expectationsPath, reportDirectory] = process.argv.slice(2);
 if (!pptxPath || !expectationsPath || !reportDirectory) {
@@ -10,32 +57,17 @@ if (!pptxPath || !expectationsPath || !reportDirectory) {
   process.exit(2);
 }
 
-let JSZip;
-try {
-  ({ default: JSZip } = await import("jszip"));
-} catch {
-  const moduleRoot = process.env.PPT_FIDELITY_NODE_MODULES;
-  if (moduleRoot) {
-    try {
-      const packageJson = JSON.parse(
-        await fs.readFile(path.join(moduleRoot, "jszip", "package.json"), "utf8")
-      );
-      let entry = packageJson.module || packageJson.main || "lib/index.js";
-      if (!path.extname(entry)) entry += ".js";
-      ({ default: JSZip } = await import(pathToFileURL(path.join(moduleRoot, "jszip", entry)).href));
-    } catch {
-      // Fall through to the guidance below.
-    }
-  }
-  if (!JSZip) {
-    console.error(
-      "This verifier requires jszip. Install it or set PPT_FIDELITY_NODE_MODULES to a node_modules directory containing jszip."
-    );
-    process.exit(2);
-  }
+const JSZip = await loadJSZip();
+if (!JSZip) {
+  console.error(
+    "This verifier requires jszip. Run npm install from the repository, or set PPT_FIDELITY_NODE_MODULES to a node_modules directory that contains jszip."
+  );
+  process.exit(2);
 }
 
-const expectations = JSON.parse(await fs.readFile(expectationsPath, "utf8"));
+const expectations = /** @type {StructureExpectations} */ (
+  JSON.parse(await fs.readFile(expectationsPath, "utf8"))
+);
 const pptxBytes = await fs.readFile(pptxPath);
 const zip = await JSZip.loadAsync(pptxBytes);
 await fs.mkdir(reportDirectory, { recursive: true });
@@ -43,7 +75,7 @@ await fs.mkdir(reportDirectory, { recursive: true });
 const fileNames = Object.keys(zip.files);
 const slideNames = fileNames
   .filter((name) => /^ppt\/slides\/slide\d+\.xml$/.test(name))
-  .sort((a, b) => Number(a.match(/\d+/)[0]) - Number(b.match(/\d+/)[0]));
+  .sort((a, b) => slideNumber(a) - slideNumber(b));
 const notes = fileNames.filter((name) => /^ppt\/notesSlides\/notesSlide\d+\.xml$/.test(name));
 
 let textboxes = 0;
@@ -52,7 +84,9 @@ let images = 0;
 const names = new Set();
 
 for (const slideName of slideNames) {
-  const xml = await zip.file(slideName).async("string");
+  const slideFile = zip.file(slideName);
+  if (!slideFile) throw new Error(`Missing slide part: ${slideName}`);
+  const xml = await slideFile.async("string");
   const shapeBlocks = xml.match(/<p:sp\b[\s\S]*?<\/p:sp>/g) || [];
   shapes +=
     shapeBlocks.length +
@@ -70,6 +104,7 @@ const errors = [];
 if (expectations.slides !== undefined && slideNames.length !== expectations.slides) {
   errors.push(`slides: expected exactly ${expectations.slides}, found ${slideNames.length}`);
 }
+/** @type {Array<[string, number, number | undefined]>} */
 const minimumChecks = [
   ["textboxes", textboxes, expectations.minTextboxes],
   ["shapes", shapes, expectations.minShapes],
